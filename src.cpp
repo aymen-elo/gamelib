@@ -29,8 +29,24 @@ game_t createGame(string title, int releaseY, float size){
     return game;
 }
 
+/*
+** ghostGame to access an actually allocated array when
+** needed even when there are no games in the collection
+*/
+game_t g_ghostGame = createGame("nullgame", 2077, 0.0);
+
 collection_t createCollection(float maxMemo){
-    collection_t coll = {0, 0, maxMemo, nullptr};
+    
+    collection_t coll;
+    
+    coll.collection = new personalGame_t*[1];
+    coll.collection[0] = new personalGame_t;
+    coll.collection[0]->game = &g_ghostGame;
+
+    coll.gamesNumber = 0;
+    coll.installedGamesNumber = 0;
+    coll.maxMemory = maxMemo;
+
     return coll;
 }
 
