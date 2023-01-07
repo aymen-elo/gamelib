@@ -24,6 +24,13 @@ struct collection_t{
     int occupied;
 };
 
+game_t createGame(string title, int releaseY, float size){
+    game_t game = {title, releaseY, size};
+    return game;
+}
+
+
+
 int main(){
     
 }
