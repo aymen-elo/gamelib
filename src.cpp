@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+/** size in gigabytes **/
 struct game_t{
     string title;
     int releaseYear;
@@ -15,13 +16,12 @@ struct personalGame_t{
 };
 
 /** a collection is a pointer to an array of pointers **/
+/** maxMemory in gigabytes **/
 struct collection_t{
     int gamesNumber;
     int installedGamesNumber;
     float maxMemory;
     personalGame_t** collection;
-    int capacity;
-    int occupied;
 };
 
 game_t createGame(string title, int releaseY, float size){
@@ -29,6 +29,10 @@ game_t createGame(string title, int releaseY, float size){
     return game;
 }
 
+collection_t createCollection(float maxMemo){
+    collection_t coll = {0, 0, maxMemo, nullptr};
+    return coll;
+}
 
 
 int main(){
