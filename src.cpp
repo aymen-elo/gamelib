@@ -50,6 +50,12 @@ collection_t createCollection(float maxMemo){
     return coll;
 }
 
+void desallocation(collection_t coll){
+    for(int i = 0; i < coll.gamesNumber; i++){
+        delete coll.collection[i]; 
+    }
+    delete[] coll.collection;
+}
 
 int main(){
     
