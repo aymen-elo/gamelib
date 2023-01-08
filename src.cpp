@@ -50,7 +50,7 @@ collection_t createCollection(float maxMemo){
     coll.collection[0] = new personalGame_t;
     coll.collection[0]->game = &g_ghostGame;
 
-    coll.gamesNumber = 0;
+    coll.gamesNumber = 1;
     coll.installedGamesNumber = 1;
     coll.maxMemory = maxMemo;
 
@@ -134,6 +134,28 @@ void installGame(game_t & game, collection_t & coll){
     cout<<"Game not found, you need to add it to the collection to be able to install it"<<endl;
 }
 
+void displayCollection(collection_t coll){
+    cout<<endl;
+
+    cout<<"YOUR COLLECTION: "<<endl;
+    cout<<"Installed games: "<<endl<<endl;
+
+    if(coll.gamesNumber == 1){
+        cout<<"No installed games to show"<<endl;
+    }else{
+        string str = "                     ";
+        for(int i = 0; i < coll.installedGamesNumber; i++){
+            game_t* game = coll.collection[i]->game;
+            cout<<"Title: "<<game->title<<str<<"Released: "<<game->releaseYear<<str<<"Size: "<<game->size<<" GB"<<endl;
+            
+            personalGame_t* myGame = coll.collection[i];
+            cout<<"Playtime: "<<myGame->playtimeHours<<" Hours"<<"   "<<"Trophies: "<<myGame->trophiesNumber<<endl;
+        }
+    }
+
+
+    cout<<endl;
+}
 
 
 int main(){
