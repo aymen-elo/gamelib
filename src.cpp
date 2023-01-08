@@ -134,22 +134,40 @@ void installGame(game_t & game, collection_t & coll){
     cout<<"Game not found, you need to add it to the collection to be able to install it"<<endl;
 }
 
+
+void displayGame(game_t* game){
+    string str = "                     ";
+    cout<<"Title: "<<game->title<<str<<"Released: "<<game->releaseYear<<str<<"Size: "<<game->size<<" GB"<<endl;
+}
+
+void displayGameStats(personalGame_t* game){
+    cout<<"Playtime: "<<game->playtimeHours<<" Hours"<<"   "<<"Trophies: "<<game->trophiesNumber<<endl;
+}
+
 void displayCollection(collection_t coll){
     cout<<endl;
 
-    cout<<"YOUR COLLECTION: "<<endl;
-    cout<<"Installed games: "<<endl<<endl;
+    cout<<"YOUR COLLECTION: "<<endl<<endl;
 
     if(coll.gamesNumber == 1){
-        cout<<"No installed games to show"<<endl;
+        cout<<"No games to show"<<endl;
     }else{
-        string str = "                     ";
+        cout<<"Installed games: "<<endl<<endl;
         for(int i = 0; i < coll.installedGamesNumber; i++){
             game_t* game = coll.collection[i]->game;
-            cout<<"Title: "<<game->title<<str<<"Released: "<<game->releaseYear<<str<<"Size: "<<game->size<<" GB"<<endl;
-            
+            displayGame(game);
+
             personalGame_t* myGame = coll.collection[i];
-            cout<<"Playtime: "<<myGame->playtimeHours<<" Hours"<<"   "<<"Trophies: "<<myGame->trophiesNumber<<endl;
+            displayGameStats(myGame);
+        }
+
+        cout<<"Non installed games: "<<endl<<endl;
+        for(int i = coll.installedGamesNumber; i < coll.gamesNumber; i++){
+            game_t* game = coll.collection[i]->game;
+            displayGame(game);
+
+            personalGame_t* myGame = coll.collection[i];
+            displayGameStats(myGame);
         }
     }
 
