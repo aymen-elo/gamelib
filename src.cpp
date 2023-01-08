@@ -24,6 +24,13 @@ struct collection_t{
     personalGame_t** collection;
 };
 
+void deallocation(collection_t coll){
+    for(int i = 0; i < coll.gamesNumber; i++){
+        delete coll.collection[i]; 
+    }
+    delete[] coll.collection;
+}
+
 game_t createGame(string title, int releaseY, float size){
     game_t game = {title, releaseY, size};
     return game;
@@ -69,7 +76,26 @@ void addGame(game_t & game, collection_t & coll){
         return;
     }
 
+    for(int i = 1; i < coll.gamesNumber; i++){
+        
+        if(coll.collection[i]->game == &game){
+            
+            if(coll.collection[i]->isInstalled){
+                cout<<"The game is already installed"<<endl;
+            }else{
+                cout<<"The game is already in your library"<<endl;
+            }
+
+        }
+    }
+
+    
     personalGame_t** temp = new personalGame_t*[coll.gamesNumber + 1];
+
+    for(int i = 0; i < coll.gamesNumber+1; i++){
+        temp[i] = new personalGame_t;
+    }
+
 
     /**i=1 because we have the ghostGame in the beggining**/
     for(int i = 1; i < coll.installedGamesNumber; i++){
@@ -81,6 +107,11 @@ void addGame(game_t & game, collection_t & coll){
     for(int i = coll.installedGamesNumber+1; i < coll.gamesNumber; i++){
         temp[i] = coll.collection[i];
     }
+
+    deallocation(coll);
+    coll.collection = temp;
+    coll.gamesNumber++;
+
 }
 
 
@@ -97,12 +128,7 @@ void installGame(game_t & game, collection_t & coll){
     cout<<"Game not found, you need to add it to the collection to be able to install it"<<endl;
 }
 
-void desallocation(collection_t coll){
-    for(int i = 0; i < coll.gamesNumber; i++){
-        delete coll.collection[i]; 
-    }
-    delete[] coll.collection;
-}
+
 
 int main(){
     
