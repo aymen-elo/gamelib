@@ -67,6 +67,17 @@ float occupiedSize(collection_t coll){
     return size;
 }
 
+personalGame_t** allocatePersonalGamesArray(size_t newSize){
+    
+    personalGame_t** newPersonalGamesArray = new personalGame_t*[newSize];
+
+    for(int i = 0; i < newSize; i++){
+        newPersonalGamesArray[i] = new personalGame_t;
+    }
+
+    return newPersonalGamesArray;
+}
+
 
 /* TODO: Check if game is already there */
 void addGame(game_t & game, collection_t & coll){
@@ -90,12 +101,7 @@ void addGame(game_t & game, collection_t & coll){
     }
 
     
-    personalGame_t** temp = new personalGame_t*[coll.gamesNumber + 1];
-
-    for(int i = 0; i < coll.gamesNumber+1; i++){
-        temp[i] = new personalGame_t;
-    }
-
+    personalGame_t** temp = allocatePersonalGamesArray(coll.gamesNumber + 1);
 
     /**i=1 because we have the ghostGame in the beggining**/
     for(int i = 1; i < coll.installedGamesNumber; i++){
