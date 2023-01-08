@@ -60,6 +60,8 @@ float occupiedSize(collection_t coll){
     return size;
 }
 
+
+/* TODO: Check if game is already there */
 void addGame(game_t & game, collection_t & coll){
 
     if((coll.maxMemory - occupiedSize(coll)) < game.size){
@@ -79,6 +81,20 @@ void addGame(game_t & game, collection_t & coll){
     for(int i = coll.installedGamesNumber+1; i < coll.gamesNumber; i++){
         temp[i] = coll.collection[i];
     }
+}
+
+
+/* TODO: check if game is in installed part*/
+void installGame(game_t & game, collection_t & coll){
+
+    for(int i = coll.installedGamesNumber; i < coll.installedGamesNumber; i++){
+        if(coll.collection[i]->game == &game){
+            coll.collection[i]->isInstalled = true;
+            return;
+        }
+    }
+    
+    cout<<"Game not found, you need to add it to the collection to be able to install it"<<endl;
 }
 
 void desallocation(collection_t coll){
