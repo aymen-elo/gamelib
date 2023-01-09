@@ -144,7 +144,7 @@ void displayGameStats(personalGame_t* game){
     cout<<"Playtime: "<<game->playtimeHours<<" Hours"<<"   "<<"Trophies: "<<game->trophiesNumber<<endl;
 }
 
-void displayCollection(collection_t coll){
+void displayCollection(collection_t & coll){
     cout<<endl;
 
     cout<<"YOUR COLLECTION: "<<endl<<endl;
@@ -153,22 +153,33 @@ void displayCollection(collection_t coll){
         cout<<"No games to show"<<endl;
     }else{
         cout<<"Installed games: "<<endl<<endl;
-        for(int i = 0; i < coll.installedGamesNumber; i++){
-            game_t* game = coll.collection[i]->game;
-            displayGame(game);
+        // > 1 because we have a <ghost game>
+        if(coll.installedGamesNumber > 1){
+            for(int i = 1; i < coll.installedGamesNumber; i++){
+                game_t* game = coll.collection[i]->game;
+                displayGame(game);
 
-            personalGame_t* myGame = coll.collection[i];
-            displayGameStats(myGame);
+                personalGame_t* myGame = coll.collection[i];
+                displayGameStats(myGame);
+            }
+        }else{
+            cout<<" no games to show..."<<endl;
         }
+        cout<<endl;
 
         cout<<"Non installed games: "<<endl<<endl;
-        for(int i = coll.installedGamesNumber; i < coll.gamesNumber; i++){
-            game_t* game = coll.collection[i]->game;
-            displayGame(game);
+        if(coll.gamesNumber > 1){
+            for(int i = coll.installedGamesNumber; i < coll.gamesNumber; i++){
+                game_t* game = coll.collection[i]->game;
+                displayGame(game);
 
-            personalGame_t* myGame = coll.collection[i];
-            displayGameStats(myGame);
+                personalGame_t* myGame = coll.collection[i];
+                displayGameStats(myGame);
+            }
+        }else{
+            cout<<" no games to show..."<<endl;
         }
+        cout<<endl;
     }
 
 
@@ -178,4 +189,13 @@ void displayCollection(collection_t coll){
 
 int main(){
     
+    cout<<"test"<<endl;
+    collection_t coll = createCollection(500.0);
+    
+    game_t warzone = createGame("Warzone", 2020, 100.0);
+
+    addGame(warzone, coll);
+
+    displayCollection(coll);
+    deallocation(coll);
 }
